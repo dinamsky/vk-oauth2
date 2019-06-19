@@ -6,16 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="social-github" />
+        <module name="vk-oauth2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="social-github" target="1.8" />
+      <module name="vk-oauth2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="social-github" options="-parameters" />
+      <module name="vk-oauth2" options="-parameters" />
     </option>
   </component>
 </project>

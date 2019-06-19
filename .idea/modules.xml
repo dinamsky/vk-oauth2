@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/social-github.iml" filepath="$PROJECT_DIR$/social-github.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vk-oauth2.iml" filepath="$PROJECT_DIR$/vk-oauth2.iml" />
     </modules>
   </component>
 </project>

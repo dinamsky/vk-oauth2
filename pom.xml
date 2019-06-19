@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>social-github</artifactId>
+    <artifactId>vk-oauth2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>social-github-vk</name>
+    <name>vk-oauth2</name>
     <description>Project for Spring Boot</description>
 
     <parent>

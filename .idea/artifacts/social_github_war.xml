@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="social-github-0.0.1-SNAPSHOT.war">
+    <root id="archive" name="vk-oauth2-0.0.1-SNAPSHOT.war">
       <element id="artifact" artifact-name="social-github:war exploded" />
     </root>
   </artifact>
