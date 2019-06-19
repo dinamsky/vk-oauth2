@@ -58,12 +58,13 @@
           });
 
           $.get("/friends", function(data) {
+              var Myobj = JSON.parse(data);
               $('<p>', { text: 'Друзья;'}).appendTo('#friends');
-                for (let i = 0; i < data.length; i++) {
+                for (let i = 0; i < Myobj.length; i++) {
 
-                    $('<p>', { text: 'data[i].id'}).appendTo('#friends');
-                    $('<p>', { text: 'data[i].first_name'}).appendTo('#friends');
-                    $('<p>', { text: 'data[i].last_name'}).appendTo('#friends');
+                    $('<p>', { text: Myobj[i].id}).appendTo('#friends');
+                    $('<p>', { text: Myobj[i].first_name}).appendTo('#friends');
+                    $('<p>', { text: Myobj[i].last_name}).appendTo('#friends');
 
 
               }

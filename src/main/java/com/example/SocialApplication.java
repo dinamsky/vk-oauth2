@@ -15,19 +15,23 @@
  */
 package com.example;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
 import javax.servlet.Filter;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.boot.configurationprocessor.json.JSONStringer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -67,68 +71,17 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
 	public Map<String, String> user(Principal principal) {
 		Map<String, String> map = new LinkedHashMap<>();
 		map.put("name", principal.getName());
-//		OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vk(), oAuth2ClientContext);
-//		UserInfoTokenServices tokenServicesvk = new UserInfoTokenServices(vkResource().getUserInfoUri(), vk().getClientId());
-//		tokenServicesvk.setRestTemplate(vkTemplate);
-//
-//		FriendResponse response = vkTemplate.getForObject("https://api.vk.com/method/friends.get?v=5.59", );
-//		List<VkontakteFriend> friends = response.getItems();
-//		System.out.println(principal.getName());
-//		System.out.println("*****************************************************************************");
-//		for (VkontakteFriend friend:friends){
-//			System.out.println(friend.getId()+friend.getFirstName()+friend.getLastName());
-//		}
-//		System.out.println("*****************************************************************************");
-//
-//
-
 		return map;
 	}
 
-
-
-	//TODO как это оформить на фронтенде? И еще я так думаю можно было не воротить сушности френдреспонс и френд
-    //	а воспользоваться  json парсером и не париться
-//	@RequestMapping("/friend")
-//	public Map<String,String> friends() {
-//		OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vk(), oAuth2ClientContext);
-//		UserInfoTokenServices tokenServicesvk = new UserInfoTokenServices(vkResource().getUserInfoUri(), vk().getClientId());
-//		tokenServicesvk.setRestTemplate(vkTemplate);
-//
-//		FriendResponse response = vkTemplate.getForObject("https://api.vk.com/method/friends.get?v=5.59", FriendResponse.class);
-//		List<VkontakteFriend> friends = response.getItems();
-//		Map<String, String> map = new LinkedHashMap<>();
-//		for (VkontakteFriend friend : friends) {
-//
-//			map.put("name", friend.getFirstName());
-//			map.put("lastname", friend.getLastName());
-//			map.put("id",String.valueOf(friend.getId()));
-////			??????????
-//		}
-//
-//		return map;
-//	}
-
 	@RequestMapping("/friends")
-	public List<Map<String,String>> friends() {
+	public String friends() {
 		OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vk(), oAuth2ClientContext);
 		UserInfoTokenServicesForVk tokenServicesvk = new UserInfoTokenServicesForVk("https://api.vk.com/method/friends.get?fields=city,domain&count=10&v=5.59", vk().getClientId());
 		tokenServicesvk.setRestTemplate(vkTemplate);
-
 		JsonNode response = vkTemplate.getForObject("https://api.vk.com/method/friends.get?fields=city,domain&count=10&v=5.59", JsonNode.class);
-		System.out.println(response.toString());
-		ArrayNode data = (ArrayNode) response.get("response").get("items");
-		List<Map<String,String>> map = new LinkedList<>();
-		System.out.println(data.toString());
-		for (JsonNode dataNode : data) {
-			Map<String,String> friends =new HashMap<>();
-			friends.put("id",dataNode.get("id").asText());
-			friends.put("first_name",dataNode.get("first_name").asText());
-			friends.put("last_name",dataNode.get("last_name").asText());
-			map.add(friends);
-
-		}
-		return map;
+		JsonNode data =  response.get("response").get("items");
+		return data.toString();
 	}
 
 	@Override
