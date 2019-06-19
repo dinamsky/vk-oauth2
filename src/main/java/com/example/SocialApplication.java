@@ -16,10 +16,7 @@
 package com.example;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.Filter;
 
@@ -113,22 +110,24 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
 //	}
 
 	@RequestMapping("/friends")
-	public Map<String,String> friends() {
-//		https://vk.com/dev/friends.get?params[user_id]=6492&params[order]=name&params[count]=3&params[offset]=5&params[fields]=city%2Cdomain&params[name_case]=ins&params[v]=5.95
-				OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vk(), oAuth2ClientContext);
+	public List<Map<String,String>> friends() {
+		OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vk(), oAuth2ClientContext);
 		UserInfoTokenServicesForVk tokenServicesvk = new UserInfoTokenServicesForVk("https://api.vk.com/method/friends.get?fields=city,domain&count=10&v=5.59", vk().getClientId());
 		tokenServicesvk.setRestTemplate(vkTemplate);
 
-		ObjectNode response = vkTemplate.getForObject("https://api.vk.com/method/friends.get?fields=city,domain&count=10&v=5.59", ObjectNode.class);
+		JsonNode response = vkTemplate.getForObject("https://api.vk.com/method/friends.get?fields=city,domain&count=10&v=5.59", JsonNode.class);
+		System.out.println(response.toString());
 		ArrayNode data = (ArrayNode) response.get("response").get("items");
-		Map<String, String> map = new LinkedHashMap<>();
-
+		List<Map<String,String>> map = new LinkedList<>();
+		System.out.println(data.toString());
 		for (JsonNode dataNode : data) {
-			map.put("id",dataNode.get("id").asText());
-			map.put("first_name",dataNode.get("first_name").asText());
-			map.put("last_name",dataNode.get("last_name").asText());
-		}
+			Map<String,String> friends =new HashMap<>();
+			friends.put("id",dataNode.get("id").asText());
+			friends.put("first_name",dataNode.get("first_name").asText());
+			friends.put("last_name",dataNode.get("last_name").asText());
+			map.add(friends);
 
+		}
 		return map;
 	}
 
