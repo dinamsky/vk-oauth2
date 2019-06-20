@@ -1,6 +1,7 @@
-package com.example;
+package com.example.security;
 
 
+import com.example.security.UserInfoTokenServicesForVk;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
